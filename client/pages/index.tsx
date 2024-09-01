@@ -1,6 +1,6 @@
 import MainNavigation from "@/components/shared/navigation/MainNavigation/MainNavigation";
 
-const Index = () => {
+function Index() {
   return (
     <>
       <MainNavigation />
