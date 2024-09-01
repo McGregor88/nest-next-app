@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { styled } from '@mui/material/styles';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 
@@ -57,6 +58,7 @@ const AppBar = styled(MuiAppBar, {
 
 function MainAppBar({ handleDrawerOpen, open }: MainAppBarProps) {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const router = useRouter();
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>): void => setAnchorElUser(event.currentTarget);
   const handleCloseUserMenu = (): void => setAnchorElUser(null);
 
@@ -94,16 +96,16 @@ function MainAppBar({ handleDrawerOpen, open }: MainAppBarProps) {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            component="span"
+            onClick={() => router.push('/')}
             sx={{
+              cursor: 'pointer',
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
-              textDecoration: 'none',
             }}
           >
               {projectName}

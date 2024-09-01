@@ -8,26 +8,28 @@ import {
   IconButton,
   Divider,
   List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
 } from '@mui/material/';
 
 import {
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
-  MoveToInbox as InboxIcon,
-  Mail as MailIcon,
 } from '@mui/icons-material/';
 
 import { drawerWidth } from '@/global/Vars';
+import MenuItem from '@/components/core/MenuItem/MenuItem';
 import MainAppBar from './components/MainAppBar';
 
-const menu = {
-  main: ['Main', 'Tracks'],
-  other: ['About us']
-};
+const menuItems = [{
+  text: 'Main',
+  href: '/',
+}, {
+  text: 'Tasks',
+  href: '/tasks',
+}, {
+  text: 'About us',
+  href: '/about',
+  separated: true,
+}];
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -69,32 +71,13 @@ function MainNavigation() {
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
-
         <Divider />
         <List>
-          {menu.main.map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-
-        <Divider />
-        <List>
-          {menu.other.map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
+          {menuItems.map(({ separated, href, text }) => (
+            <>
+              {separated && <Divider />}
+              <MenuItem key={href} href={href} text={text} />
+            </>
           ))}
         </List>
       </Drawer>
