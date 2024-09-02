@@ -14,6 +14,7 @@ function Index() {
     {`
       .center {
         display: flex;
+        height: calc(100vh - 64px);
         flex-direction: column;
         align-items: center; 
         justify-content: center;
