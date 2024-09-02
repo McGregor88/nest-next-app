@@ -1,13 +1,8 @@
-import { useRouter } from 'next/router';
-import { 
-  Grid2 as Grid, 
-  Card,
-  Box,
-  Button 
-} from '@mui/material/';
+import { Grid2 as Grid, Card } from '@mui/material/';
 
 import { ITask } from '@/types/task';
 import MainLayout from '@/components/shared/layouts/MainLayout/MainLayout';
+import TasksHeaderSection from '@/components/features/tasks/TasksHeaderSection/TasksHeaderSection';
 import TaskList from '@/components/shared/tasks/TaskList/TaskList';
 
 const tasks: ITask[] = [
@@ -16,20 +11,11 @@ const tasks: ITask[] = [
 ];
 
 function Index() {
-  const router = useRouter();
-
   return (
     <MainLayout>
       <Grid container spacing={4} justifyContent="center">
         <Card style={{ width: 900 }}>
-          <Box sx={{ p: 3 }}>
-            <Grid container justifyContent="space-between">
-              <h2>Tasks list</h2>
-              <Button onClick={() => router.push('/tasks/create')}>
-                Create
-              </Button>
-            </Grid>
-          </Box>
+          <TasksHeaderSection />
           <TaskList tasks={tasks} />
         </Card>
       </Grid>

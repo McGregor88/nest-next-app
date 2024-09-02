@@ -1,6 +1,7 @@
 import { FC } from "react";
 import Head from "next/head";
 
+import styles from "./MainLayout.module.scss";
 import { Container } from "@mui/material";
 import MainNavigation from "../../navigation/MainNavigation/MainNavigation";
 
@@ -27,7 +28,7 @@ const MainLayout: FC<MainLayoutProps> = ({
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
             </Head>
             <MainNavigation/>
-            <Container style={{ margin: '64px auto 0' }}>
+            <Container className={styles["main-container"]}>
                 {children}
             </Container>
         </>

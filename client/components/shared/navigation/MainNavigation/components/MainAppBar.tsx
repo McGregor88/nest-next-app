@@ -77,9 +77,7 @@ function MainAppBar({ handleDrawerOpen, open }: MainAppBarProps) {
             onClick={handleDrawerOpen}
             edge="start"
             sx={[
-              {
-                mr: 2,
-              },
+              { mr: 2 },
               open && { display: 'none' },
             ]}
           >
