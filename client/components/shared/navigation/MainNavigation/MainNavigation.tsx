@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 
 import { 
@@ -74,10 +74,10 @@ function MainNavigation() {
         <Divider />
         <List>
           {menuItems.map(({ separated, href, text }) => (
-            <>
+            <Fragment key={href}>
               {separated && <Divider />}
-              <MenuItem key={href} href={href} text={text} />
-            </>
+              <MenuItem href={href} text={text} />
+            </Fragment>
           ))}
         </List>
       </Drawer>
