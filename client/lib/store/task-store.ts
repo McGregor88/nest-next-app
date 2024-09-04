@@ -21,6 +21,7 @@ export class TaskStore {
        .catch(error => {
           this.error = error.message;
           this.isFetching = false;
+          console.error(this.error);
         });
     }
   

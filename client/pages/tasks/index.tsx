@@ -1,3 +1,5 @@
+"use client"
+import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Grid2 as Grid, Card, Button } from '@mui/material/';
 
@@ -10,6 +12,10 @@ const Index = observer(() => {
   const {
     taskStore: { data, fetchTasks },
   } = useStores();
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   return (
     <MainLayout>
