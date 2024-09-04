@@ -1,8 +1,8 @@
-import { useRouter } from "next/router";
-import { Button, Grid2 as Grid } from "@mui/material";
+import { useRouter } from 'next/router';
+import { Button, Grid2 as Grid } from '@mui/material';
 
-import { ITask } from "@/types/task";
-import MainLayout from "@/components/shared/layouts/MainLayout/MainLayout";
+import { ITask } from '@/types/task';
+import MainLayout from '@/components/shared/layouts/MainLayout/MainLayout';
 
 const taskPage = () => {
   const task: ITask = { 
