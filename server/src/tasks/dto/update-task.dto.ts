@@ -1,4 +1,9 @@
+import { IsString } from 'class-validator';
+
 export class UpdateTaskDto {
-  readonly name;
-  readonly description;
+  @IsString()
+  name: string;
+
+  @IsString()
+  description: string;
 }

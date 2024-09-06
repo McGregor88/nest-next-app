@@ -1,5 +1,9 @@
+import { IsEmail, IsStrongPassword } from 'class-validator';
+
 export class CreateUserDto {
-  readonly username;
-  readonly email;
-  readonly password;
+  @IsEmail()
+  email: string;
+
+  @IsStrongPassword()
+  password: string;
 }
