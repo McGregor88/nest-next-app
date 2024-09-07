@@ -18,43 +18,43 @@ export class AuthService {
   ) {}
 
   async login(user: User, res: Response, redirect = false) {
-    const expiresAccessToken = new Date();
-    expiresAccessToken.setMilliseconds(
-      expiresAccessToken.getTime() + parseInt(this.configService.getOrThrow<string>('JWT_EXPIRATION_ACCESS_TOKEN_MS'))
-    );
-
-    const expiresRefreshToken = new Date();
-    expiresRefreshToken.setMilliseconds(
-      expiresRefreshToken.getTime() + parseInt(this.configService.getOrThrow<string>('JWT_EXPIRATION_REFRESH_TOKEN_MS'))
-    );
-
+    const JWT_SECRET_ACCESS_TOKEN = this.configService.getOrThrow<string>('JWT_SECRET_ACCESS_TOKEN');
+    const JWT_SECRET_REFRESH_TOKEN = this.configService.getOrThrow<string>('JWT_SECRET_REFRESH_TOKEN');
+    const JWT_EXPIRATION_ACCESS_TOKEN_MS = this.configService.getOrThrow<string>('JWT_EXPIRATION_ACCESS_TOKEN_MS');
+    const JWT_EXPIRATION_REFRESH_TOKEN_MS = this.configService.getOrThrow<string>('JWT_EXPIRATION_REFRESH_TOKEN_MS');
+  
     const tokenPayload: TokenPayload = {
       userId: user._id.toHexString(),
     };
 
-    const accessToken = await this.jwtService.sign(tokenPayload, { 
-      secret: this.configService.getOrThrow('JWT_SECRET_ACCESS_TOKEN'), 
-      expiresIn: `${this.configService.getOrThrow('JWT_EXPIRATION_ACCESS_TOKEN_MS')}ms`,
-    });
-  
-    console.log('JWT_SECRET_REFRESH_TOKEN:', this.configService.getOrThrow<string>('JWT_SECRET_ACCESS_TOKEN'));
-
-   const refreshToken = this.jwtService.sign(tokenPayload, {
-      secret: this.configService.getOrThrow('JWT_SECRET_REFRESH_TOKEN'),
-      expiresIn: `${this.configService.getOrThrow('JWT_EXPIRATION_REFRESH_TOKEN_MS')}ms`,
-    });
-
-    console.log('JWT_SECRET_REFRESH_TOKEN:', this.configService.getOrThrow<string>('JWT_SECRET_REFRESH_TOKEN'));
-
-    res.cookie('Authentication', accessToken, { 
+    const cookieDefaultConfig: object = {
       httpOnly: true,
       secure: this.configService.get('NODE_ENV') === 'production',
+    };
+
+    const expiresAccessToken = new Date();
+    expiresAccessToken.setMilliseconds(expiresAccessToken.getTime() + parseInt(JWT_EXPIRATION_ACCESS_TOKEN_MS));
+
+    const expiresRefreshToken = new Date();
+    expiresRefreshToken.setMilliseconds(expiresRefreshToken.getTime() + parseInt(JWT_EXPIRATION_REFRESH_TOKEN_MS));
+
+    const accessToken = await this.jwtService.sign(tokenPayload, { 
+      secret: JWT_SECRET_ACCESS_TOKEN, 
+      expiresIn: `${JWT_EXPIRATION_ACCESS_TOKEN_MS}ms`,
+    });
+
+    const refreshToken = this.jwtService.sign(tokenPayload, {
+      secret: JWT_SECRET_REFRESH_TOKEN,
+      expiresIn: `${JWT_EXPIRATION_REFRESH_TOKEN_MS}ms`,
+    });
+
+    res.cookie('Authentication', accessToken, {
+      ...cookieDefaultConfig, 
       expires: expiresAccessToken,
     });
 
-    res.cookie('Refresh', refreshToken, { 
-      httpOnly: true,
-      secure: this.configService.get('NODE_ENV') === 'production',
+    res.cookie('Refresh', refreshToken, {
+      ...cookieDefaultConfig,  
       expires: expiresRefreshToken,
     });
 
