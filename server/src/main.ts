@@ -11,9 +11,9 @@ async function bootstrap() {
     const configService = app.get(ConfigService);
     const PORT = configService.get('PORT') || 5001;
 
+    app.enableCors();
     app.useGlobalPipes(new ValidationPipe());
     app.use(cookieParser());
-    app.enableCors();
 
     await app.listen(PORT, () => console.log(`server started on PORT: ${PORT}`));
   } catch (error) {
