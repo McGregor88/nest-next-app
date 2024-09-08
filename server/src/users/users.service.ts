@@ -18,7 +18,7 @@ export class UsersService {
         password: await hash(dto.password, 10),
       }).save();
     } catch (error) {
-      throw new BadRequestException(error.message);
+      throw new BadRequestException(`Failed to create the user, ${error.message}`);
     }
   }
 
@@ -27,7 +27,7 @@ export class UsersService {
       const users = await this.usersModel.find({});
       return users;
     } catch (error) {
-      throw new BadRequestException(error.message);
+      throw new BadRequestException(`Failed to find all users, ${error.message}`);
     }
   }
 
@@ -39,7 +39,7 @@ export class UsersService {
       }
       return user;
     } catch (error) {
-      throw new BadRequestException(error.message);
+      throw new BadRequestException(`Failed to find the user, ${error.message}`);
     }
   }
 
@@ -47,7 +47,7 @@ export class UsersService {
     try {
       return await this.usersModel.findOneAndUpdate(query, data);
     } catch (error) {
-      throw new BadRequestException(error.message);
+      throw new BadRequestException(`Failed to update the user, ${error.message}`);
     }
   }
 
@@ -57,7 +57,7 @@ export class UsersService {
       if (user) return user;
       return this.create(dto);
     } catch (error) {
-      throw new BadRequestException(error.message);
+      throw new BadRequestException(`Failed to get or create the user, ${error.message}`);
     }
   }
 }
