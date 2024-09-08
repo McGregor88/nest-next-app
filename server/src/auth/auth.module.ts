@@ -10,6 +10,7 @@ import { LoginService } from './login/login.service';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
+//import { GoogleStrategy } from './strategies/google.strategy';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
     LoginService, 
     LocalStrategy, 
     JwtStrategy, 
-    JwtRefreshStrategy
+    JwtRefreshStrategy,
+    //GoogleStrategy,
   ]
 })
 export class AuthModule {}

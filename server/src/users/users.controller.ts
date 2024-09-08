@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UseGuards, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards, Body } from '@nestjs/common';
 
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,11 +18,8 @@ export class UsersController {
   @Get()
   @UseGuards(JwtAuthGuard)
   findAll(
-    @CurrentUser() user: User,  
-    @Query('count') count: number, 
-    @Query('offset') offset: number
+    @CurrentUser() user: User
   ) {
-    console.log('User: ', user); 
-    return this.usersService.findAll(count, offset);
+    return this.usersService.findAll();
   }
 }

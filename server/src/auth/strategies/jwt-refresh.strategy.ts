@@ -26,7 +26,7 @@ export class JwtRefreshStrategy extends PassportStrategy(
     });
   }
 
-  validate(request: Request, payload: TokenPayload) {
-    return this.authService.verifyUserRefreshToken(request.cookies?.Refresh, payload.userId);
+  validate(req: Request, payload: TokenPayload) {
+    return this.authService.verifyUserRefreshToken(req.cookies?.Refresh, payload.userId);
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model, UpdateQuery } from 'mongoose';
 import { hash } from 'bcryptjs';
@@ -12,30 +12,52 @@ export class UsersService {
   constructor(@InjectModel(User.name) private usersModel: Model<UserDocument>) {}
 
   async create(dto: CreateUserDto) {
-    await new this.usersModel({
-      ...dto,
-      password: await hash(dto.password, 10),
-    }).save();
+    try {
+      await new this.usersModel({
+        ...dto,
+        password: await hash(dto.password, 10),
+      }).save();
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
-  async findAll(count = 10, offset = 0): Promise<User[]> {
-    const users = await this.usersModel
-      .find()
-      .skip(Number(offset))
-      .limit(Number(count));
-
-    return users;
+  async findAll(): Promise<User[]> {
+    try {
+      const users = await this.usersModel.find({});
+      return users;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   async findOne(query: FilterQuery<User>): Promise<User> {
-    const user = (await this.usersModel.findOne(query)).toObject();
-    if (!user) {
-      throw new NotFoundException('User not found');
+    try {
+      const user = (await this.usersModel.findOne(query)).toObject();
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+      return user;
+    } catch (error) {
+      throw new BadRequestException(error.message);
     }
-    return user;
   }
 
   async update(query: FilterQuery<User>, data: UpdateQuery<User>) {
-    return await this.usersModel.findOneAndUpdate(query, data);
+    try {
+      return await this.usersModel.findOneAndUpdate(query, data);
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  async getOrCreate(dto: CreateUserDto): Promise<User|void> {
+    try {
+      const user = await this.usersModel.findOne({ email: dto.email });
+      if (user) return user;
+      return this.create(dto);
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }
