@@ -2,10 +2,10 @@ import { observer } from 'mobx-react-lite';
 import { useStores } from '@/lib/hooks';
 import { Button } from '@mui/material';
 
-import styles from './main.module.scss';
+import styles from '../pages/main.module.scss';
 import MainLayout from '@/components/shared/layouts/MainLayout/MainLayout';
 
-const Index = observer(() => {
+const Home = observer(() => {
   const {
     uiStore: { count, increment },
   } = useStores();
@@ -14,7 +14,7 @@ const Index = observer(() => {
     <>
     <MainLayout>
       <div className={styles.center}>
-        <h1>You are Welcome!</h1>
+        <h1>You are Welcome!!!</h1>
         <h3>You'll like it here!</h3>
         <div>{count}</div>
         <Button onClick={increment}>Increment</Button>
@@ -24,4 +24,4 @@ const Index = observer(() => {
   );
 });
 
-export default Index;
+export default Home;

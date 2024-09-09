@@ -1,6 +1,5 @@
 import { makeAutoObservable } from 'mobx';
 import axios from 'axios';
-import { BASE_URL } from '@/global/Vars';
 
 export class TaskStore {
     data = [];
@@ -13,7 +12,7 @@ export class TaskStore {
 
     fetchTasks = () => {
       this.isFetching = true;
-      axios.get(`${BASE_URL}/tasks`)
+      axios.get(`${process.env.API_URL}/tasks`)
        .then(response => {
           this.data = response.data;
           this.isFetching = false;
