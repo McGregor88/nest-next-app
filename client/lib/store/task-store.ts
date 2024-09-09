@@ -11,6 +11,7 @@ export class TaskStore {
     }
 
     fetchTasks = () => {
+      console.log(process.env.API_URL);
       this.isFetching = true;
       axios.get(`${process.env.API_URL}/tasks`)
        .then(response => {
