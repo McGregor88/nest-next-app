@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { getAuthCookie } from '../auth-cookie';
 
-async function login(_prevState: any, formData: FormData) {
+export async function login(_prevState: any, formData: FormData) {
   const res = await fetch(`${process.env.API_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -27,5 +27,3 @@ async function login(_prevState: any, formData: FormData) {
 
   redirect("/");
 }
-
-export default login;
