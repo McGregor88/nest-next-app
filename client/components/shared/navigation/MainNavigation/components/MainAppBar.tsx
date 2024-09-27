@@ -32,7 +32,21 @@ type DrawerOpenProp = {
 interface AppBarProps extends MuiAppBarProps, OpenProp {}
 interface MainAppBarProps extends DrawerOpenProp, OpenProp {}
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+interface ISetting {
+  name: string;
+  href: string;
+}
+
+const settings: ISetting[] = [{
+  name: 'Profile',
+  href: '/profile',
+}, {
+  name: 'Dashboard',
+  href: '/',
+}, {
+  name: 'Logout',
+  href: '/logout',
+}];
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -137,10 +151,15 @@ function MainAppBar({ handleDrawerOpen, open }: MainAppBarProps) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
           >
-            {settings.map(setting => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
+            {settings.map((setting: ISetting) => (
+              <MenuItem 
+                key={setting.name} 
+                onClick={() => {
+                  handleCloseUserMenu();
+                  router.push(setting.href);
+                }}>
                 <Typography sx={{ textAlign: 'center' }}>
-                  {setting}
+                  {setting.name}
                 </Typography>
               </MenuItem>
             ))}
